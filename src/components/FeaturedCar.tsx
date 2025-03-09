@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import { Share2Icon, CalendarIcon, InfoIcon, ArrowRightIcon } from "lucide-react";
-interface CarSpec {
-  label: string;
-  value: string;
-}
+import React from "react";
+import { Share2Icon, CalendarIcon, ArrowRightIcon } from "lucide-react";
 interface Car {
   id: string;
   title: string;
   description: string;
   price: string;
-  specs: CarSpec[];
   image: string;
   affiliateLink: string;
 }
@@ -19,7 +14,6 @@ interface FeaturedCarProps {
 export function FeaturedCar({
   car
 }: FeaturedCarProps) {
-  const [showFullDetails, setShowFullDetails] = useState(false);
   const today = new Date();
   const formattedDate = today.toLocaleDateString("en-US", {
     weekday: "long",
@@ -42,37 +36,22 @@ export function FeaturedCar({
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               {car.title}
             </h1>
-            <div className="max-w-2xl mb-6">
-              <p className="text-lg md:text-xl opacity-90">{car.description}</p>
+            <div className="max-w-3xl mb-8">
+              <p className="text-lg md:text-xl opacity-90 leading-relaxed">
+                {car.description}
+              </p>
             </div>
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
               <div className="text-3xl font-bold text-red-500">{car.price}</div>
               <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-md font-medium flex items-center transition-colors" onClick={() => window.open(car.affiliateLink, "_blank")}>
                 View on eBay
                 <ArrowRightIcon size={18} className="ml-2" />
-              </button>
-              <button className="flex items-center opacity-70 hover:opacity-100 transition-opacity" onClick={() => setShowFullDetails(!showFullDetails)}>
-                <InfoIcon size={18} className="mr-2" />
-                {showFullDetails ? "Hide details" : "View details"}
               </button>
               <button className="flex items-center opacity-70 hover:opacity-100 transition-opacity">
                 <Share2Icon size={18} className="mr-2" />
                 Share
               </button>
             </div>
-            {showFullDetails && <div className="space-y-6">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-black/50 p-4 rounded-md backdrop-blur-sm">
-                  {car.specs.map((spec, index) => <div key={index} className="flex flex-col">
-                      <span className="text-sm opacity-70">{spec.label}</span>
-                      <span className="font-medium">{spec.value}</span>
-                    </div>)}
-                </div>
-                <div className="bg-black/30 backdrop-blur-sm p-4 rounded-md">
-                  <div className="h-[250px] w-full max-w-[300px] mx-auto flex items-center justify-center text-xs text-white/40">
-                    Rectangle Advertisement
-                  </div>
-                </div>
-              </div>}
           </div>
         </div>
       </div>
